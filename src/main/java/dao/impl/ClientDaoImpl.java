@@ -24,25 +24,18 @@ public class ClientDaoImpl implements ClientDao {
     }
 
         @Override
-        public void add (Client client){
-            try {
+        public void add (Client client) throws SQLException {
                 dao.create(client);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+
 
         }
 
         @Override
-        public Client findByPhone (String phone) {
-            try {
+        public Client findByPhone (String phone) throws SQLException {
+
                 return dao.queryBuilder()
                             .where()
                             .eq("phone", phone)
                             .queryForFirst();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
         }
 }
