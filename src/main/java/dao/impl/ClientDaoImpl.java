@@ -24,8 +24,11 @@ public class ClientDaoImpl implements ClientDao {
     }
 
         @Override
-        public void add (Client client) throws SQLException {
+        public Client add (Client client) throws SQLException {
                 dao.create(client);
+                return dao.queryBuilder()
+                        .orderBy("id", false)
+                        .queryForFirst();
 
 
         }
