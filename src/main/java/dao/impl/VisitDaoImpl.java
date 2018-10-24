@@ -44,4 +44,16 @@ public class VisitDaoImpl implements VisitDao {
             return null;
         }
     }
+
+    @Override
+    public Visit findTheLast() {
+        try {
+            return dao.queryBuilder()
+                    .orderBy("id", false)
+                    .queryForFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

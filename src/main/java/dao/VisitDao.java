@@ -8,4 +8,5 @@ import java.util.List;
 public interface VisitDao {
     void add(Visit visit);
     List<Visit> findByUserId(int id);
+    Visit findTheLast();
 }

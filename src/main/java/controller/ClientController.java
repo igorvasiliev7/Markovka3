@@ -5,19 +5,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.Client;
 import model.Visit;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
     private static Client client;
+    @FXML
+    private Text txtWrongAmount;
+    @FXML
+    private TextField txtAmount;
+    @FXML
+    private DatePicker dateVisit;
+    @FXML
+    private Button btnAddVisit;
     @FXML
     private Text txtVisits;
     @FXML
@@ -48,15 +55,44 @@ public class ClientController implements Initializable {
         txtClientPhone.setText(client.getPhone());
         txtClientStatus.setText(client.getStatus());
 
+        printTable();
+
+
+
+        btnAddVisit.setOnAction(event -> addVisit());
+        //TODO make checkbox card active
+        //TODO how to add one row, not new table
+    }
+
+    private void printTable() {
         visitList.addAll(DaoFactory.getVisitDao().findByUserId(client.getId()));
+        visitAndSum();
+        tableVisits.setItems(visitList);
+    }
+
+    private void visitAndSum() {
         txtVisits.setText(visitList.size()+" visits");
         int sum=0;
         for (Visit visit : visitList) {
             sum+=visit.getAmount();
         }
         txtSum.setText(""+sum+" grn");
+    }
+
+    private void addVisit() {
+        String amount = txtAmount.getText();
+        if(amount.isEmpty())amount = "0";
+        if (dateVisit.getValue()==null||!amount.matches("[0-9]+")){
+            txtWrongAmount.setText("Choose date or check amount");
+            return;
+        }
+        final Visit visit = new Visit(client.getId(),dateVisit.getValue().toString(), Integer.parseInt(amount));
+        DaoFactory.getVisitDao().add(visit);
+        visitList.add(DaoFactory.getVisitDao().findTheLast());
         tableVisits.setItems(visitList);
-        //TODO make checkbox card active
+        visitAndSum();
+        txtWrongAmount.setText("Successfully added!");
+
     }
 
     public static void setClient(Client client) {

@@ -50,9 +50,10 @@ public class CreateController implements Initializable {
 
     txtPhone.setText(phone);
 
-    choiceStatus.getItems().add("Choice 1");
-    choiceStatus.getItems().add("Choice 2");
-    choiceStatus.getItems().add("Choice 3");
+    choiceStatus.getItems().add("Новий клієнт");
+    choiceStatus.getItems().add("Єдиноразовий");
+    choiceStatus.getItems().add("Постійний клієнт");
+    choiceStatus.getItems().add("Не повернулась");
 
     btnBackToLogin.setOnAction(event -> nextStage("Log in", "login"));
     btnAdd.setOnAction(event -> add());

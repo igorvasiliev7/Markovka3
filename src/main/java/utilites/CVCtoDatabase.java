@@ -3,11 +3,9 @@ package utilites;
 import com.opencsv.CSVReader;
 import dao.factory.DaoFactory;
 import model.Client;
+import model.Visit;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -21,22 +19,35 @@ public class CVCtoDatabase {
         search();
     }
     private static void search() {
-        try (FileInputStream fis = new FileInputStream("src/main/resources/base1.csv");
-             InputStreamReader isr = new InputStreamReader(fis,
-                     StandardCharsets.UTF_8);
-             CSVReader csvReader = new CSVReader(isr,';')) {
-            String[] line;
-//            System.out.println(Arrays.toString(line));
-            while ((line=csvReader.readNext())!=null){
-             Client client = new Client(line[1], line[2],line[4], Integer.parseInt(line[5]));
-                try {
-                    DaoFactory.getClientDao().add(client);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        try (BufferedReader br = new BufferedReader (new FileReader("src/main/resources/base1.csv"))) {
+            String line;
+            String [] list;
+            while ((line=br.readLine())!=null){
+                list = line.split(";");
+               if(DaoFactory.getClientDao().findByPhone("0"+list[2])==null) addClient(list);
+                addVisit(list);
             }
 
-        } catch (IOException e) {
+        } catch (IOException| SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void addVisit(String[] list) {
+        Visit visit = new Visit(list[0],)
+    }
+
+    private static void addClient(String [] list) {
+        Client client;
+        if (list[5].isEmpty()) {
+            client = new Client(list[1], "0"+list[2],list[4], 0);
+        }
+        else {
+            client = new Client(list[1], "0"+list[2],list[4], Integer.parseInt(list[5]));
+        }
+        try {
+            DaoFactory.getClientDao().add(client);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
