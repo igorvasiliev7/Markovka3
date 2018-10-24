@@ -77,6 +77,16 @@ public class CreateController implements Initializable {
             e.printStackTrace();
         }
 
+        clientCard();
+    }
+
+    private void clientCard() {
+        AppManager.getStage().setTitle("Client`s card");
+        try {
+            AppManager.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/client.fxml"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void back() {
