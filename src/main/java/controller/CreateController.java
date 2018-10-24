@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import model.Client;
 import model.Visit;
 import start.AppManager;
+import start.AppManagerService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,12 +23,14 @@ import java.util.ResourceBundle;
 
 public class CreateController implements Initializable {
 
-    public static String phone;
+    private static String phone;
 
     @FXML
     public TextField txtName;
+
     @FXML
     public Text txtPhone;
+
     @FXML
     public ChoiceBox choiceStatus = new ChoiceBox();
     @FXML
@@ -40,7 +43,6 @@ public class CreateController implements Initializable {
     public Button btnBackToLogin;
     @FXML
     public Text txtWrongAmount;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -52,11 +54,10 @@ public class CreateController implements Initializable {
     choiceStatus.getItems().add("Choice 2");
     choiceStatus.getItems().add("Choice 3");
 
-    btnBackToLogin.setOnAction(event -> back());
+    btnBackToLogin.setOnAction(event -> nextStage("Log in", "login"));
     btnAdd.setOnAction(event -> add());
 
     }
-
     private void add() {
         String amount = txtAmount.getText();
         if (amount.isEmpty()){
@@ -76,25 +77,15 @@ public class CreateController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        clientCard();
+        ClientController.setClient(client);
+        nextStage("Client`s card", "client");
     }
 
-    private void clientCard() {
-        AppManager.getStage().setTitle("Client`s card");
-        try {
-            AppManager.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/client.fxml"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void nextStage(String title, String fileName) {
+        new AppManagerService().changeStage(title,fileName);
     }
 
-    private void back() {
-        AppManager.getStage().setTitle("Log In");
-        try {
-            AppManager.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/main.fxml"))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void setPhone(String phone) {
+        CreateController.phone = phone;
     }
 }

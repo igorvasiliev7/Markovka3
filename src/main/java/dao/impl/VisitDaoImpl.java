@@ -32,9 +32,13 @@ public class VisitDaoImpl implements VisitDao {
     }
 
     @Override
-    public List<Visit> findAll() {
+    public List<Visit> findByUserId(int id) {
         try {
-            return dao.queryForAll();
+            return dao.queryBuilder()
+                    .orderBy("date", true)
+                    .where()
+                    .eq("client_id", id)
+                    .query();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @DatabaseTable(tableName = "visits")
 public class Visit {
     @DatabaseField(columnName = "id", generatedId = true)

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface VisitDao {
     void add(Visit visit);
-    List<Visit> findAll();
+    List<Visit> findByUserId(int id);
 }

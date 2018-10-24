@@ -2,16 +2,13 @@ package controller;
 
 import dao.factory.DaoFactory;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Client;
-import start.AppManager;
+import start.AppManagerService;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -38,13 +35,11 @@ public class LoginController implements Initializable {
         try {
             Client client = DaoFactory.getClientDao().findByPhone(phone);
             if(client==null){
-                try {
-                    CreateController.phone = phone;
-                   AppManager.getStage().setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/create.fxml"))));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                CreateController.setPhone(phone);
+                nextStage("Add client", "create");
+            }else {
+                ClientController.setClient(client);
+                nextStage("Client`s card", "client");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,5 +53,9 @@ public class LoginController implements Initializable {
             return false;
         }
         return true;
+    }
+
+    private void nextStage(String title, String fileName) {
+        new AppManagerService().changeStage(title,fileName);
     }
 }
