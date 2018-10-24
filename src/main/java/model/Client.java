@@ -19,9 +19,16 @@ public class Client {
     @DatabaseField(columnName = "status")
     private String status;
     @DatabaseField(columnName = "card")
-    private boolean card;
+    private int card;
 
-    public Client(String name, String phone,  String status) {
+    public Client(String phone, String name, String status, int card) {
+        this.phone = phone;
+        this.name = name;
+        this.status = status;
+        this.card = card;
+    }
+
+    public Client(String name, String phone, String status) {
         this.phone = phone;
         this.name = name;
         this.status = status;

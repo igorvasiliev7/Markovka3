@@ -1,6 +1,8 @@
 package utilites;
 
 import com.opencsv.CSVReader;
+import dao.factory.DaoFactory;
+import model.Client;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class CVCtoDatabase {
@@ -24,18 +27,13 @@ public class CVCtoDatabase {
              CSVReader csvReader = new CSVReader(isr,';')) {
             String[] line;
 //            System.out.println(Arrays.toString(line));
-            int i=0;
             while ((line=csvReader.readNext())!=null){
-                System.out.println(++i);
-                System.out.print(line[0]);
-                System.out.print(line[1]);
-                System.out.print(line[2]);
-                System.out.print(line[3]);
-                System.out.print(line[4]);
-                System.out.print(line[5]);
-                System.out.print(line[6]);
-                System.out.print(line[7]);
-
+             Client client = new Client(line[1], line[2],line[4], Integer.parseInt(line[5]));
+                try {
+                    DaoFactory.getClientDao().add(client);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
         } catch (IOException e) {
