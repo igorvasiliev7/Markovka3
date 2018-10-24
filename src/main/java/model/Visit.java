@@ -6,7 +6,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @DatabaseTable(tableName = "visits")
 public class Visit {
@@ -18,4 +17,10 @@ public class Visit {
     private String date;
     @DatabaseField (columnName = "amount")
     private int amount;
+
+    public Visit(int clientId, String date, int amount) {
+        this.clientId = clientId;
+        this.date = date;
+        this.amount = amount;
+    }
 }

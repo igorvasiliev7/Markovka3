@@ -12,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Client;
+import model.Visit;
 import start.AppManager;
 
 import java.io.IOException;
@@ -37,6 +38,8 @@ public class CreateController implements Initializable {
     public Button btnAdd;
     @FXML
     public Button btnBackToLogin;
+    @FXML
+    public Text txtWrongAmount;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,14 +58,24 @@ public class CreateController implements Initializable {
     }
 
     private void add() {
+        String amount = txtAmount.getText();
+        if (amount.isEmpty()){
+            amount = "0";
+        }
+        if(choiceStatus.getValue()==null||txtDate.getValue()==null||!amount.matches("[0-9]+")){
+            txtWrongAmount.setText("Fill all fields correctly, choose date&status");
+            return;
+        }
+
         Client client = new Client(txtName.getText(),txtPhone.getText(), choiceStatus.getValue().toString());
 
         try {
-           client = DaoFactory.getClientDao().add(client);
+          client = DaoFactory.getClientDao().add(client);
+           Visit visit = new Visit(client.getId(),txtDate.getValue().toString(), Integer.valueOf(amount));
+           DaoFactory.getVisitDao().add(visit);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 
