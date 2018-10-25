@@ -54,6 +54,7 @@ public class CreateController implements Initializable {
     choiceStatus.getItems().add("Єдиноразовий");
     choiceStatus.getItems().add("Постійний клієнт");
     choiceStatus.getItems().add("Не повернулась");
+    choiceStatus.getSelectionModel().selectFirst();
 
     btnBackToLogin.setOnAction(event -> nextStage("Log in", "login"));
     btnAdd.setOnAction(event -> add());
@@ -64,8 +65,8 @@ public class CreateController implements Initializable {
         if (amount.isEmpty()){
             amount = "0";
         }
-        if(choiceStatus.getValue()==null||txtDate.getValue()==null||!amount.matches("[0-9]+")){
-            txtWrongAmount.setText("Fill all fields correctly, choose date&status");
+        if(txtDate.getValue()==null||!amount.matches("[0-9]+")){
+            txtWrongAmount.setText("Fill amount correctly or choose date");
             return;
         }
 

@@ -8,6 +8,7 @@ import dao.ClientDao;
 import model.Client;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ClientDaoImpl implements ClientDao {
 
@@ -41,4 +42,26 @@ public class ClientDaoImpl implements ClientDao {
                             .eq("phone", phone)
                             .queryForFirst();
         }
+        @Override
+        public List<Client> findByStatus(String status){
+            try {
+                return dao.queryBuilder()
+                        .where()
+                        .eq("status", status)
+                        .query();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+    @Override
+    public List<Client> findAll(){
+        try {
+            return dao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

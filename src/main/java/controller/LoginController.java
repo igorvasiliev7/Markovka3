@@ -4,6 +4,7 @@ import dao.factory.DaoFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Client;
@@ -11,9 +12,16 @@ import start.AppManagerService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    @FXML
+    private Button btnAllClients;
+    @FXML
+    private ChoiceBox choiceStatus;
+    @FXML
+    private Button btnByStatus;
     @FXML
     private Button btnLogin;
     @FXML
@@ -23,8 +31,25 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        choiceStatus.getItems().add("Новий клієнт");
+        choiceStatus.getItems().add("Єдиноразовий");
+        choiceStatus.getItems().add("Постійний клієнт");
+        choiceStatus.getItems().add("Не повернулась");
+        choiceStatus.getSelectionModel().selectFirst();
 
-    btnLogin.setOnAction(event->login() );
+        btnByStatus.setOnAction(event -> filterByStatus());
+        btnAllClients.setOnAction(event -> filterAllClients());
+        btnLogin.setOnAction(event->login() );
+    }
+
+    private void filterAllClients() {
+        FilterController.clients = DaoFactory.getClientDao().findAll();
+        new AppManagerService().changeStage("Filter by status", "filter");
+    }
+
+    private void filterByStatus() {
+      FilterController.clients = DaoFactory.getClientDao().findByStatus(choiceStatus.getValue().toString());
+      new AppManagerService().changeStage("Filter by status", "filter");
     }
 
     private void login() {
