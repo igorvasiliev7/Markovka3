@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Call;
@@ -41,15 +42,28 @@ public class FilterController implements Initializable {
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         columnCard.setCellValueFactory(new PropertyValueFactory<>("card"));
         printClientTable();
-        btnToLogin.setOnAction(event -> toLogin());
+        btnToLogin.setOnAction(event -> changeStage("Log in", "login"));
     }
 
-    private void toLogin() {
-        new AppManagerService().changeStage("To login", "login");
+    private void changeStage(String title, String file) {
+        new AppManagerService().changeStage(title, file);
     }
+
 
     private void printClientTable() {
         listClient.addAll(clients);
         tableClient.setItems(listClient);
-    }
+
+        tableClient.setRowFactory(tv -> {
+            TableRow<Client> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty())) {
+                    Client rowData = row.getItem();
+                    ClientController.setClient(rowData);
+                    changeStage("Client`s menu", "client");
+                }
+            });
+            return row ;
+        });
+}
 }
