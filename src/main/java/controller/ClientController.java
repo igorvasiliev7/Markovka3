@@ -8,15 +8,30 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import model.Call;
 import model.Client;
 import model.Visit;
+import start.AppManagerService;
 
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
     private static Client client;
+    @FXML
+    private TableView<Call> tableCalls;
+    @FXML
+    private TableColumn<Call, String> columnCallDate;
+    @FXML
+    private TableColumn<Call, String> columnComment;
+    @FXML
+    private DatePicker dateCall;
+    @FXML
+    private TextField txtComment;
+    @FXML
+    private Button btnAddCall;
+    @FXML
+    private Button btnToLogin;
     @FXML
     private Text txtWrongAmount;
     @FXML
@@ -45,48 +60,73 @@ public class ClientController implements Initializable {
     private TableColumn<Visit, Integer> columnAmount;
 
     private ObservableList<Visit> visitList = FXCollections.observableArrayList();
+    private ObservableList<Call> callList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         columnDate.setCellValueFactory(new PropertyValueFactory<Visit, String>("date"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<Visit, Integer>("amount"));
+        columnCallDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
         txtClientName.setText(client.getName());
         txtClientPhone.setText(client.getPhone());
         txtClientStatus.setText(client.getStatus());
+        checkCard.setSelected(client.getCard() == 1);
 
-        printTable();
+        printVisitTable();
+        printCallTable();
 
-
-
+        btnToLogin.setOnAction(event -> toLogin());
         btnAddVisit.setOnAction(event -> addVisit());
-        //TODO make checkbox card active
-        //TODO how to add one row, not new table
+        btnAddCall.setOnAction(event -> addCall());
     }
 
-    private void printTable() {
+    private void addCall() {
+        if (dateCall.getValue() == null) {
+            txtWrongAmount.setText("Choose call date");
+            return;
+        }
+        final Call call = new Call(client.getId(), dateCall.getValue().toString(), txtComment.getText());
+        DaoFactory.getCallDao().call(call);
+        callList.add(DaoFactory.getCallDao().findTheLast());
+        tableCalls.setItems(callList);
+        txtWrongAmount.setText("Successfully added!");
+
+    }
+
+    private void printCallTable() {
+        callList.addAll(DaoFactory.getCallDao().findByUserId(client.getId()));
+        tableCalls.setItems(callList);
+    }
+
+    private void toLogin() {
+        new AppManagerService().changeStage("Log in", "login");
+    }
+
+    private void printVisitTable() {
         visitList.addAll(DaoFactory.getVisitDao().findByUserId(client.getId()));
         visitAndSum();
         tableVisits.setItems(visitList);
     }
 
     private void visitAndSum() {
-        txtVisits.setText(visitList.size()+" visits");
-        int sum=0;
+        txtVisits.setText(visitList.size() + " visits");
+        int sum = 0;
         for (Visit visit : visitList) {
-            sum+=visit.getAmount();
+            sum += visit.getAmount();
         }
-        txtSum.setText(""+sum+" grn");
+        txtSum.setText("" + sum + " grn");
     }
 
     private void addVisit() {
         String amount = txtAmount.getText();
-        if(amount.isEmpty())amount = "0";
-        if (dateVisit.getValue()==null||!amount.matches("[0-9]+")){
+        if (amount.isEmpty()) amount = "0";
+        if (dateVisit.getValue() == null || !amount.matches("[0-9]+")) {
             txtWrongAmount.setText("Choose date or check amount");
             return;
         }
-        final Visit visit = new Visit(client.getId(),dateVisit.getValue().toString(), Integer.parseInt(amount));
+        final Visit visit = new Visit(client.getId(), dateVisit.getValue().toString(), Integer.parseInt(amount));
         DaoFactory.getVisitDao().add(visit);
         visitList.add(DaoFactory.getVisitDao().findTheLast());
         tableVisits.setItems(visitList);

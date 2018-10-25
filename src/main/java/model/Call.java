@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @DatabaseTable(tableName = "calls")
 public class Call {
     @DatabaseField(columnName = "id", generatedId = true)
@@ -21,4 +20,10 @@ public class Call {
     private String date;
     @DatabaseField (columnName = "comment")
     private String comment;
+
+    public Call(int clientId, String date, String comment) {
+        this.clientId = clientId;
+        this.date = date;
+        this.comment = comment;
+    }
 }
