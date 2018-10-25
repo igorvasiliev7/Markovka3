@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @DatabaseTable(tableName = "clients")
 public class Client {
     @DatabaseField(columnName = "id", generatedId = true)

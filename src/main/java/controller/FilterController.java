@@ -1,8 +1,8 @@
 package controller;
 
-import dao.factory.DaoFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,9 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Call;
 import model.Client;
-import start.AppManagerService;
+import service.AppManagerService;
 
 import java.net.URL;
 import java.util.List;
@@ -42,11 +41,11 @@ public class FilterController implements Initializable {
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         columnCard.setCellValueFactory(new PropertyValueFactory<>("card"));
         printClientTable();
-        btnToLogin.setOnAction(event -> changeStage("Log in", "login"));
+      //  btnToLogin.setOnAction(event -> changeStage(event, "login"));
     }
 
-    private void changeStage(String title, String file) {
-        new AppManagerService().changeStage(title, file);
+    private void changeStage(Event event, String file) {
+        new AppManagerService().changeStage(event, file);
     }
 
 
@@ -60,7 +59,7 @@ public class FilterController implements Initializable {
                 if (event.getClickCount() == 2 && (! row.isEmpty())) {
                     Client rowData = row.getItem();
                     ClientController.setClient(rowData);
-                    changeStage("Client`s menu", "client");
+                    changeStage(event, "client");
                 }
             });
             return row ;

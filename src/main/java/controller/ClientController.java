@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import model.Call;
 import model.Client;
 import model.Visit;
-import start.AppManagerService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,8 +29,8 @@ public class ClientController implements Initializable {
     private TextField txtComment;
     @FXML
     private Button btnAddCall;
-    @FXML
-    private Button btnToLogin;
+//    @FXML
+//    private Button btnToLogin;
     @FXML
     private Text txtWrongAmount;
     @FXML
@@ -77,7 +76,7 @@ public class ClientController implements Initializable {
         printVisitTable();
         printCallTable();
 
-        btnToLogin.setOnAction(event -> toLogin());
+      //  btnToLogin.setOnAction(event -> toLogin());
         btnAddVisit.setOnAction(event -> addVisit());
         btnAddCall.setOnAction(event -> addCall());
     }
@@ -100,9 +99,9 @@ public class ClientController implements Initializable {
         tableCalls.setItems(callList);
     }
 
-    private void toLogin() {
-        new AppManagerService().changeStage("Log in", "login");
-    }
+//    private void toLogin() {
+//      new AppManagerService().changeStage("Log in", "login");
+//    }
 
     private void printVisitTable() {
         visitList.addAll(DaoFactory.getVisitDao().findByUserId(client.getId()));

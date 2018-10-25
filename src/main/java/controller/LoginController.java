@@ -1,6 +1,8 @@
 package controller;
 
 import dao.factory.DaoFactory;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,11 +10,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Client;
-import start.AppManagerService;
+import service.AppManagerService;
+
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -37,22 +39,22 @@ public class LoginController implements Initializable {
         choiceStatus.getItems().add("Не повернулась");
         choiceStatus.getSelectionModel().selectFirst();
 
-        btnByStatus.setOnAction(event -> filterByStatus());
-        btnAllClients.setOnAction(event -> filterAllClients());
-        btnLogin.setOnAction(event->login() );
+        btnByStatus.setOnAction(event -> filterByStatus(event));
+        btnAllClients.setOnAction(event -> filterAllClients(event));
+        btnLogin.setOnAction(event->login(event) );
     }
 
-    private void filterAllClients() {
+    private void filterAllClients(ActionEvent event) {
         FilterController.clients = DaoFactory.getClientDao().findAll();
-        new AppManagerService().changeStage("Filter by status", "filter");
+        nextStage(event, "filter");
     }
 
-    private void filterByStatus() {
+    private void filterByStatus(Event event) {
       FilterController.clients = DaoFactory.getClientDao().findByStatus(choiceStatus.getValue().toString());
-      new AppManagerService().changeStage("Filter by status", "filter");
+      nextStage(event, "filter");
     }
 
-    private void login() {
+    private void login(Event event) {
         String phone = txtPhone.getText();
 
         if(!checkIfPhone(phone)) return;
@@ -61,10 +63,10 @@ public class LoginController implements Initializable {
             Client client = DaoFactory.getClientDao().findByPhone(phone);
             if(client==null){
                 CreateController.setPhone(phone);
-                nextStage("Add client", "create");
+                nextStage( event, "create");
             }else {
                 ClientController.setClient(client);
-                nextStage("Client`s card", "client");
+                nextStage(event, "client");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +82,7 @@ public class LoginController implements Initializable {
         return true;
     }
 
-    private void nextStage(String title, String fileName) {
-        new AppManagerService().changeStage(title,fileName);
+    private void nextStage(Event event, String fileName) {
+       new AppManagerService().changeStage(event,fileName);
     }
 }

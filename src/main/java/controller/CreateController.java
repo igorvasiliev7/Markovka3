@@ -1,11 +1,9 @@
 package controller;
 
 import dao.factory.DaoFactory;
-import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -14,9 +12,8 @@ import javafx.scene.text.Text;
 import model.Client;
 import model.Visit;
 import start.AppManager;
-import start.AppManagerService;
+import service.AppManagerService;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -39,8 +36,8 @@ public class CreateController implements Initializable {
     public DatePicker txtDate;
     @FXML
     public Button btnAdd;
-    @FXML
-    public Button btnBackToLogin;
+//    @FXML
+//    public Button btnBackToLogin;
     @FXML
     public Text txtWrongAmount;
     @Override
@@ -56,11 +53,11 @@ public class CreateController implements Initializable {
     choiceStatus.getItems().add("Не повернулась");
     choiceStatus.getSelectionModel().selectFirst();
 
-    btnBackToLogin.setOnAction(event -> nextStage("Log in", "login"));
-    btnAdd.setOnAction(event -> add());
+   // btnBackToLogin.setOnAction(event -> nextStage("Log in", "login"));
+    btnAdd.setOnAction(event -> add(event));
 
     }
-    private void add() {
+    private void add(Event event) {
         String amount = txtAmount.getText();
         if (amount.isEmpty()){
             amount = "0";
@@ -80,11 +77,11 @@ public class CreateController implements Initializable {
             e.printStackTrace();
         }
         ClientController.setClient(client);
-        nextStage("Client`s card", "client");
+        nextStage(event, "client");
     }
 
-    private void nextStage(String title, String fileName) {
-        new AppManagerService().changeStage(title,fileName);
+    private void nextStage(Event event, String fileName) {
+        new AppManagerService().changeStage(event,fileName);
     }
 
     public static void setPhone(String phone) {

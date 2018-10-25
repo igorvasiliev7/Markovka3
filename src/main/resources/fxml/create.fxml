@@ -18,7 +18,6 @@
       <Text fill="#0917b9" layoutX="223.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose client`s status" />
       <DatePicker fx:id="txtDate" editable="false" focusTraversable="false" layoutX="21.0" layoutY="117.0" />
       <TextField fx:id="txtAmount" focusTraversable="false" layoutX="21.0" layoutY="161.0" prefHeight="25.0" prefWidth="174.0" promptText="Amount" />
-      <Button fx:id="btnBackToLogin" layoutX="108.0" layoutY="244.0" mnemonicParsing="false" text="Back to login" textFill="#0e42dd" />
       <Text fx:id="txtWrongAmount" fill="#e40f0f" layoutX="219.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="196.23437222838402" />
    </children>
 </AnchorPane>
