@@ -3,9 +3,12 @@ package dao.impl;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import dao.ClientDao;
+import model.Call;
 import model.Client;
+import model.ClientDTO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,7 +26,6 @@ public class ClientDaoImpl implements ClientDao {
             e.printStackTrace();
         }
     }
-
         @Override
         public Client add (Client client) throws SQLException {
                 dao.create(client);
@@ -52,6 +54,15 @@ public class ClientDaoImpl implements ClientDao {
             } catch (SQLException e) {
                 e.printStackTrace();
                 return null;
+            }
+        }
+
+        @Override
+        public void updateCard(Client client){
+            try {
+                dao.update(client);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 

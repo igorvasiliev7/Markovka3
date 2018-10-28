@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import model.Call;
 import model.Client;
@@ -17,6 +19,14 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
     private static Client client;
+    @FXML
+    private Button btnAddCard;
+    @FXML
+    private Button btnDelCatd;
+    @FXML
+    private Button btnDelVisit;
+    @FXML
+    private Button btnDelCall;
     @FXML
     private TableView<Call> tableCalls;
     @FXML
@@ -29,8 +39,6 @@ public class ClientController implements Initializable {
     private TextField txtComment;
     @FXML
     private Button btnAddCall;
-//    @FXML
-//    private Button btnToLogin;
     @FXML
     private Text txtWrongAmount;
     @FXML
@@ -76,9 +84,32 @@ public class ClientController implements Initializable {
         printVisitTable();
         printCallTable();
 
-      //  btnToLogin.setOnAction(event -> toLogin());
         btnAddVisit.setOnAction(event -> addVisit());
         btnAddCall.setOnAction(event -> addCall());
+        btnDelVisit.setOnAction(event -> delVisit());
+        btnDelCall.setOnAction(event -> delCall());
+        btnAddCard.setOnAction(event -> update(1));
+        btnDelCatd.setOnAction(event -> update(0));
+    }
+
+    private void update(int i) {
+        client.setCard(i);
+        DaoFactory.getClientDao().updateCard(client);
+        if(i==1)checkCard.setSelected(true);
+        else checkCard.setSelected(false);
+    }
+
+    private void delCall() {
+        Call call = tableCalls.getSelectionModel().getSelectedItem();
+        DaoFactory.getCallDao().delete(call);
+        callList.remove(call);
+    }
+
+    private void delVisit() {
+      Visit visit = tableVisits.getSelectionModel().getSelectedItem();
+      DaoFactory.getVisitDao().delete(visit);
+        visitList.remove(visit);
+        visitAndSum();
     }
 
     private void addCall() {
@@ -90,7 +121,7 @@ public class ClientController implements Initializable {
         DaoFactory.getCallDao().call(call);
         callList.add(DaoFactory.getCallDao().findTheLast());
         tableCalls.setItems(callList);
-        txtWrongAmount.setText("Successfully added!");
+        txtWrongAmount.setText("Added!");
 
     }
 
@@ -98,10 +129,6 @@ public class ClientController implements Initializable {
         callList.addAll(DaoFactory.getCallDao().findByUserId(client.getId()));
         tableCalls.setItems(callList);
     }
-
-//    private void toLogin() {
-//      new AppManagerService().changeStage("Log in", "login");
-//    }
 
     private void printVisitTable() {
         visitList.addAll(DaoFactory.getVisitDao().findByUserId(client.getId()));
@@ -122,7 +149,7 @@ public class ClientController implements Initializable {
         String amount = txtAmount.getText();
         if (amount.isEmpty()) amount = "0";
         if (dateVisit.getValue() == null || !amount.matches("[0-9]+")) {
-            txtWrongAmount.setText("Choose date or check amount");
+            txtWrongAmount.setText("Wrong date/amount");
             return;
         }
         final Visit visit = new Visit(client.getId(), dateVisit.getValue().toString(), Integer.parseInt(amount));
@@ -130,11 +157,24 @@ public class ClientController implements Initializable {
         visitList.add(DaoFactory.getVisitDao().findTheLast());
         tableVisits.setItems(visitList);
         visitAndSum();
-        txtWrongAmount.setText("Successfully added!");
+        txtWrongAmount.setText("Added!");
 
     }
 
     public static void setClient(Client client) {
         ClientController.client = client;
+    }
+
+    public void pressedEnterCall(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            addCall();
+        }
+
+    }
+
+    public void pressedEnterVisit(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            addVisit();
+        }
     }
 }

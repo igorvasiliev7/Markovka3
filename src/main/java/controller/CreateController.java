@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import model.Client;
 import model.Visit;
@@ -24,10 +26,8 @@ public class CreateController implements Initializable {
 
     @FXML
     public TextField txtName;
-
     @FXML
     public Text txtPhone;
-
     @FXML
     public ChoiceBox choiceStatus = new ChoiceBox();
     @FXML
@@ -36,8 +36,6 @@ public class CreateController implements Initializable {
     public DatePicker txtDate;
     @FXML
     public Button btnAdd;
-//    @FXML
-//    public Button btnBackToLogin;
     @FXML
     public Text txtWrongAmount;
     @Override
@@ -53,11 +51,10 @@ public class CreateController implements Initializable {
     choiceStatus.getItems().add("Не повернулась");
     choiceStatus.getSelectionModel().selectFirst();
 
-   // btnBackToLogin.setOnAction(event -> nextStage("Log in", "login"));
-    btnAdd.setOnAction(event -> add(event));
+    btnAdd.setOnAction(event -> add("client", "Client`s info"));
 
     }
-    private void add(Event event) {
+    private void add(String file, String title) {
         String amount = txtAmount.getText();
         if (amount.isEmpty()){
             amount = "0";
@@ -77,14 +74,20 @@ public class CreateController implements Initializable {
             e.printStackTrace();
         }
         ClientController.setClient(client);
-        nextStage(event, "client");
+        nextStage(file, title);
     }
 
-    private void nextStage(Event event, String fileName) {
-        new AppManagerService().changeStage(event,fileName);
+    private void nextStage(String fileName, String title) {
+        new AppManagerService().changeStageAfterModal(fileName, title);
     }
 
     public static void setPhone(String phone) {
         CreateController.phone = phone;
+    }
+
+    public void pressedEnter(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            add("client", "Client`s info");
+        }
     }
 }

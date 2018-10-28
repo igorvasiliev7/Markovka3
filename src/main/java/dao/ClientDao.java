@@ -11,5 +11,7 @@ public interface ClientDao {
 
     List<Client> findByStatus(String status);
 
+    void updateCard(Client client);
+
     List<Client> findAll();
 }

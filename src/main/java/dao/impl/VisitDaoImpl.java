@@ -56,4 +56,23 @@ public class VisitDaoImpl implements VisitDao {
             return null;
         }
     }
+
+    @Override
+    public List<Visit> findAll(){
+        try {
+            return dao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        return null;
+        }
+    }
+
+    @Override
+    public void delete(Visit visit){
+        try {
+            dao.delete(visit);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

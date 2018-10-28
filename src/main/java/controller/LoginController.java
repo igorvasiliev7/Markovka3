@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import model.Client;
 import service.AppManagerService;
@@ -45,13 +47,13 @@ public class LoginController implements Initializable {
     }
 
     private void filterAllClients(ActionEvent event) {
-        FilterController.clients = DaoFactory.getClientDao().findAll();
-        nextStage(event, "filter");
+        FilterController.clients = DaoFactory.getClientDaoDtoImpl().findAllDto();
+        nextStage(event, "filter", "All clients filter");
     }
 
     private void filterByStatus(Event event) {
-      FilterController.clients = DaoFactory.getClientDao().findByStatus(choiceStatus.getValue().toString());
-      nextStage(event, "filter");
+      FilterController.clients = DaoFactory.getClientDaoDtoImpl().findAllDtoByStatus(choiceStatus.getValue().toString());
+      nextStage(event, "filter", "Filter by status "+choiceStatus.getValue().toString());
     }
 
     private void login(Event event) {
@@ -63,10 +65,10 @@ public class LoginController implements Initializable {
             Client client = DaoFactory.getClientDao().findByPhone(phone);
             if(client==null){
                 CreateController.setPhone(phone);
-                nextStage( event, "create");
+                nextStage( event, "create", "Add new client");
             }else {
                 ClientController.setClient(client);
-                nextStage(event, "client");
+                nextStage(event, "client", "Client`s info");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +84,13 @@ public class LoginController implements Initializable {
         return true;
     }
 
-    private void nextStage(Event event, String fileName) {
-       new AppManagerService().changeStage(event,fileName);
+    private void nextStage(Event event, String fileName, String title) {
+       new AppManagerService().changeStageModal(event,fileName, title);
+    }
+
+    public void handleEnterPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            login(event);
+        }
     }
 }

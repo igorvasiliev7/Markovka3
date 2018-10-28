@@ -10,4 +10,8 @@ public interface CallDao {
     List<Call> findByUserId(int id);
 
     Call findTheLast();
+
+    List<Call> findAll();
+
+    void delete(Call call);
 }

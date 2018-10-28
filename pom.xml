@@ -34,7 +34,7 @@
 
     <properties>
         <ormlite-version>4.48</ormlite-version>
-        <sqlite-jdbc.version>3.7.2</sqlite-jdbc.version>
+        <sqlite-jdbc.version>3.8.11.2</sqlite-jdbc.version>
         <opencsv.version>4.1</opencsv.version>
     </properties>
     <dependencies>

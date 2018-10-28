@@ -5,12 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Client;
+import model.ClientDTO;
 import service.AppManagerService;
 
 import java.net.URL;
@@ -18,34 +18,34 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class FilterController implements Initializable {
-    public static List<Client> clients;
+    public static List<ClientDTO> clients;
     @FXML
-    private TableView<Client> tableClient;
+    private TableColumn<ClientDTO, String> columnCallDate;
     @FXML
-    private Button btnToLogin;
+    private TableView<ClientDTO> tableClient;
     @FXML
-    private TableColumn<Client, String> columnName;
+    private TableColumn<ClientDTO, String> columnName;
     @FXML
-    private TableColumn<Client, String> columnPhone;
+    private TableColumn<ClientDTO, String> columnPhone;
     @FXML
-    private TableColumn<Client, String> columnStatus;
+    private TableColumn<ClientDTO, String> columnStatus;
     @FXML
-    private TableColumn<Client, Integer> columnCard;
+    private TableColumn<ClientDTO, Integer> columnCard;
 
-    private ObservableList<Client> listClient = FXCollections.observableArrayList();
+    private ObservableList<ClientDTO> listClient = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        columnName.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+        columnPhone.setCellValueFactory(new PropertyValueFactory<>("clientPhone"));
+        columnStatus.setCellValueFactory(new PropertyValueFactory<>("clientStatus"));
         columnCard.setCellValueFactory(new PropertyValueFactory<>("card"));
+        columnCallDate.setCellValueFactory(new PropertyValueFactory<>("lastCallDate"));
         printClientTable();
-      //  btnToLogin.setOnAction(event -> changeStage(event, "login"));
     }
 
-    private void changeStage(Event event, String file) {
-        new AppManagerService().changeStage(event, file);
+    private void changeStage(Event event, String file, String title) {
+        new AppManagerService().changeStageModal(event, file, title);
     }
 
 
@@ -54,12 +54,12 @@ public class FilterController implements Initializable {
         tableClient.setItems(listClient);
 
         tableClient.setRowFactory(tv -> {
-            TableRow<Client> row = new TableRow<>();
+            TableRow<ClientDTO> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty())) {
-                    Client rowData = row.getItem();
-                    ClientController.setClient(rowData);
-                    changeStage(event, "client");
+                    ClientDTO rowData = row.getItem();
+                    ClientController.setClient(new Client (rowData.getClientId(),rowData.getClientPhone(), rowData.getClientName(),rowData.getClientStatus(), rowData.getCard()));
+                    changeStage(event, "client", "Client`s info");
                 }
             });
             return row ;

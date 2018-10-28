@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientController">
    <children>
       <Text fx:id="txtClientName" layoutX="28.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-      <Text fx:id="txtClientPhone" layoutX="92.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" />
-      <Text fx:id="txtClientStatus" layoutX="201.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+      <Text fx:id="txtClientPhone" layoutX="139.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" />
+      <Text fx:id="txtClientStatus" layoutX="237.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
       <TableView fx:id="tableVisits" layoutX="21.0" layoutY="48.0" prefHeight="295.0" prefWidth="152.0">
         <columns>
           <TableColumn fx:id="columnDate" prefWidth="75.0" text="Date" />
@@ -22,11 +22,11 @@
       </TableView>
       <Text fx:id="txtVisits" layoutX="30.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visits" />
       <Text fx:id="txtSum" layoutX="97.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sum" />
-      <CheckBox fx:id="checkCard" layoutX="416.0" layoutY="14.0" mnemonicParsing="false" text="Card" />
-      <TextField fx:id="txtAmount" layoutX="486.0" layoutY="87.0" prefHeight="25.0" prefWidth="99.0" promptText="Amount" />
+      <CheckBox fx:id="checkCard" disable="true" layoutX="416.0" layoutY="14.0" mnemonicParsing="false" text="Card" />
+      <TextField fx:id="txtAmount" layoutX="486.0" layoutY="87.0" onKeyPressed="#pressedEnterVisit" prefHeight="25.0" prefWidth="99.0" promptText="Amount" />
       <DatePicker fx:id="dateVisit" editable="false" focusTraversable="false" layoutX="486.0" layoutY="48.0" prefHeight="25.0" prefWidth="99.0" />
       <Button fx:id="btnAddVisit" focusTraversable="false" layoutX="486.0" layoutY="128.0" mnemonicParsing="false" text="Add visit" />
-      <Text fx:id="txtWrongAmount" fill="#d01010" layoutX="484.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="4.0" />
+      <Text fx:id="txtWrongAmount" fill="#d01010" layoutX="484.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="230.99999338388443" />
       <TableView fx:id="tableCalls" layoutX="201.0" layoutY="48.0" prefHeight="295.0" prefWidth="261.0">
          <columns>
             <TableColumn fx:id="columnCallDate" prefWidth="75.0" text="Date" />
@@ -34,7 +34,11 @@
          </columns>
       </TableView>
       <DatePicker fx:id="dateCall" editable="false" focusTraversable="false" layoutX="486.0" layoutY="174.0" prefHeight="25.0" prefWidth="99.0" />
-      <TextField fx:id="txtComment" layoutX="486.0" layoutY="211.0" prefHeight="25.0" prefWidth="99.0" promptText="Comment" />
-      <Button fx:id="btnAddCall" focusTraversable="false" layoutX="486.0" layoutY="250.0" mnemonicParsing="false" text="Add call" />
+      <TextField fx:id="txtComment" layoutX="486.0" layoutY="211.0" onKeyPressed="#pressedEnterCall" prefHeight="25.0" prefWidth="231.0" promptText="Comment" />
+      <Button fx:id="btnAddCall" focusTraversable="false" layoutX="488.0" layoutY="247.0" mnemonicParsing="false" text="Add call" />
+      <Button fx:id="btnDelVisit" layoutX="21.0" layoutY="404.0" mnemonicParsing="false" text="Delete visit" />
+      <Button fx:id="btnDelCall" layoutX="201.0" layoutY="404.0" mnemonicParsing="false" text="Delete call" />
+      <Button fx:id="btnAddCard" layoutX="484.0" layoutY="10.0" mnemonicParsing="false" text="Add card" />
+      <Button fx:id="btnDelCatd" layoutX="574.0" layoutY="10.0" mnemonicParsing="false" text="Delete card" />
    </children>
 </AnchorPane>

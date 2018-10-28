@@ -58,4 +58,24 @@ public class CallDaoImpl implements CallDao {
             return null;
         }
     }
+    @Override
+    public List<Call> findAll(){
+        try {
+            return dao.queryBuilder()
+                    .orderBy("date", false)
+                    .query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void delete(Call call){
+        try {
+            dao.delete(call);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -9,16 +9,26 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import start.AppManager;
 
 import java.io.IOException;
 
 public class AppManagerService {
-    public void changeStage(Event event, String file) {
+    private static Stage stage;
+    public void changeStageAfterModal(String file, String title){
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/"+file+".fxml"))));
+            stage.setTitle(title);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeStageModal(Event event, String file, String title) {
         try {
             final FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/"+file+".fxml"));
             final Parent parent = loader.load();
-
             final Stage stage = new Stage();
             final Scene scene = new Scene(parent);
            // scene.getStylesheets().add("css/main.css");
@@ -26,7 +36,9 @@ public class AppManagerService {
             stage.initModality(Modality.WINDOW_MODAL);
             Window window = ((Node) event.getSource()).getScene().getWindow();
             stage.initOwner(window);
+            stage.setTitle(title);
             stage.show();
+            this.stage = stage;
 
 //            stage.setOnHiding(e -> {
 //                todoList.add(0,findTheLastOne());
