@@ -15,6 +15,7 @@ import model.Client;
 import model.Visit;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -80,6 +81,8 @@ public class ClientController implements Initializable {
         txtClientPhone.setText(client.getPhone());
         txtClientStatus.setText(client.getStatus());
         checkCard.setSelected(client.getCard() == 1);
+        dateVisit.setValue(LocalDate.now());
+        dateCall.setValue(LocalDate.now());
 
         printVisitTable();
         printCallTable();

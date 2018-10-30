@@ -18,6 +18,7 @@ import service.AppManagerService;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class CreateController implements Initializable {
@@ -40,9 +41,7 @@ public class CreateController implements Initializable {
     public Text txtWrongAmount;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    AppManager.getStage().setTitle("Client creation");
-
+    txtDate.setValue(LocalDate.now());
     txtPhone.setText(phone);
 
     choiceStatus.getItems().add("Новий клієнт");

@@ -58,6 +58,7 @@ public class LoginController implements Initializable {
 
     private void login(Event event) {
         String phone = txtPhone.getText();
+        txtPhone.setText("");
 
         if(!checkIfPhone(phone)) return;
 
