@@ -16,13 +16,9 @@ public class ClientDaoDtoImpl {
     private String dtoByStatusNoCalls = "SELECT * FROM clients cl where cl.id NOT IN (select ca.client_id FROM calls ca) AND cl.status = ?;";
     private String dtoByStatusWithCalls = "SELECT cl.id id, name, phone, status, card, " +
             "MAX(date) date FROM clients cl, calls ca where ca.client_id=cl.id AND cl.status = ? GROUP BY \"client_id\" ORDER BY date DESC;";
-    public ClientDaoDtoImpl() {
-    }
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
-
-
     }
 
     public List<ClientDTO> findAllDto(){
