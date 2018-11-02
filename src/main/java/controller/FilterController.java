@@ -5,10 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import model.Client;
 import model.ClientDTO;
 import service.AppManagerService;
@@ -19,6 +18,14 @@ import java.util.ResourceBundle;
 
 public class FilterController implements Initializable {
     public static List<ClientDTO> clients;
+    @FXML
+    private TableColumn columnNumber;
+    @FXML
+    private TableColumn columnVisitDate;
+    @FXML
+    private TableColumn columnVisitSum;
+    @FXML
+    private TableColumn columnComment;
     @FXML
     private TableColumn<ClientDTO, String> columnCallDate;
     @FXML
@@ -36,11 +43,15 @@ public class FilterController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        columnNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("clientName"));
         columnPhone.setCellValueFactory(new PropertyValueFactory<>("clientPhone"));
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("clientStatus"));
         columnCard.setCellValueFactory(new PropertyValueFactory<>("card"));
         columnCallDate.setCellValueFactory(new PropertyValueFactory<>("lastCallDate"));
+        columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        columnVisitDate.setCellValueFactory(new PropertyValueFactory<>("visitDate"));
+        columnVisitSum.setCellValueFactory(new PropertyValueFactory<>("visitsSum"));
         printClientTable();
     }
 

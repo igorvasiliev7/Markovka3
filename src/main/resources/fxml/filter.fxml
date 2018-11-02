@@ -4,17 +4,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FilterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FilterController">
    <children>
-      <TableView fx:id="tableClient" layoutX="1.0" layoutY="62.0" prefHeight="449.0" prefWidth="825.0">
+      <TableView fx:id="tableClient" layoutX="18.0" layoutY="62.0" prefHeight="449.0" prefWidth="1152.0">
         <columns>
+            <TableColumn fx:id="columnNumber" prefWidth="42.0" text="#" />
           <TableColumn fx:id="columnName" prefWidth="121.0" text="Name" />
-          <TableColumn fx:id="columnPhone" prefWidth="131.0" text="Phone" />
-            <TableColumn fx:id="columnStatus" prefWidth="205.0" text="Status" />
-            <TableColumn fx:id="columnCard" prefWidth="56.0" text="Card" />
-            <TableColumn fx:id="columnCallDate" prefWidth="131.0" text="Last call" />
-            <TableColumn fx:id="columnPhone2" prefWidth="67.0" text="Visits" />
-            <TableColumn fx:id="columnPhone3" prefWidth="113.0" text="Visits sum" />
+          <TableColumn fx:id="columnPhone" prefWidth="93.0" text="Phone" />
+            <TableColumn fx:id="columnStatus" prefWidth="133.0" text="Status" />
+            <TableColumn fx:id="columnCard" prefWidth="37.0" text="Card" />
+            <TableColumn fx:id="columnVisitDate" prefWidth="112.0" text="Visit`s date" />
+            <TableColumn fx:id="columnVisitSum" prefWidth="70.0" text="Visits sum" />
+            <TableColumn fx:id="columnCallDate" prefWidth="100.0" text="Call date" />
+            <TableColumn fx:id="columnComment" prefWidth="442.0" text="Comment" />
         </columns>
       </TableView>
    </children>

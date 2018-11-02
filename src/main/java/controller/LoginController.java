@@ -41,19 +41,19 @@ public class LoginController implements Initializable {
         choiceStatus.getItems().add("Не повернулась");
         choiceStatus.getSelectionModel().selectFirst();
 
+        btnLogin.setOnAction(event->login(event) );
         btnByStatus.setOnAction(event -> filterByStatus(event));
         btnAllClients.setOnAction(event -> filterAllClients(event));
-        btnLogin.setOnAction(event->login(event) );
+    }
+
+    private void filterByStatus(Event event) {
+        FilterController.clients = DaoFactory.getClientDaoDtoImpl().findAllDtoByStatus(choiceStatus.getValue().toString());
+        nextStage(event, "filter", "Filter by status "+choiceStatus.getValue().toString());
     }
 
     private void filterAllClients(ActionEvent event) {
         FilterController.clients = DaoFactory.getClientDaoDtoImpl().findAllDto();
         nextStage(event, "filter", "All clients filter");
-    }
-
-    private void filterByStatus(Event event) {
-      FilterController.clients = DaoFactory.getClientDaoDtoImpl().findAllDtoByStatus(choiceStatus.getValue().toString());
-      nextStage(event, "filter", "Filter by status "+choiceStatus.getValue().toString());
     }
 
     private void login(Event event) {
