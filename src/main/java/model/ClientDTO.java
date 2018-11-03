@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @Setter
-@ToString
 public class ClientDTO {
     private int number;
     private int clientId;
@@ -26,5 +25,19 @@ public class ClientDTO {
         this.number = number;
         this.lastCallDate = lastCallDate;
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return  number +";"+
+                clientName +";"+
+                clientPhone + ";"+
+                clientStatus + ";"+
+                card +";"+
+                visitDate +";"+
+                visitsSum +";"+
+                lastCallDate +";"+
+                comment
+        ;
     }
 }

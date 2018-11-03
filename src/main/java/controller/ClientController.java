@@ -116,16 +116,11 @@ public class ClientController implements Initializable {
     }
 
     private void addCall() {
-        if (dateCall.getValue() == null) {
-            txtWrongAmount.setText("Choose call date");
-            return;
-        }
         final Call call = new Call(client.getId(), dateCall.getValue().toString(), txtComment.getText());
         DaoFactory.getCallDao().call(call);
         callList.add(DaoFactory.getCallDao().findTheLast());
         tableCalls.setItems(callList);
         txtWrongAmount.setText("Added!");
-
     }
 
     private void printCallTable() {
@@ -151,8 +146,8 @@ public class ClientController implements Initializable {
     private void addVisit() {
         String amount = txtAmount.getText();
         if (amount.isEmpty()) amount = "0";
-        if (dateVisit.getValue() == null || !amount.matches("[0-9]+")) {
-            txtWrongAmount.setText("Wrong date/amount");
+        if (!amount.matches("[0-9]+")) {
+            txtWrongAmount.setText("Wrong amount");
             return;
         }
         final Visit visit = new Visit(client.getId(), dateVisit.getValue().toString(), Integer.parseInt(amount));

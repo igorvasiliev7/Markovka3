@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="497.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/1.jpg" />
          </image>
@@ -22,5 +22,7 @@
       <Text layoutX="39.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clients filters:" />
       <ChoiceBox fx:id="choiceStatus" layoutX="128.0" layoutY="120.0" prefWidth="150.0" />
       <Button fx:id="btnAllClients" layoutX="39.0" layoutY="166.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="All clients" />
+      <Button fx:id="btnExportToExcel" layoutX="481.0" layoutY="44.0" mnemonicParsing="false" style="-fx-background-color: #41D4E1;" text="Export to excel" />
+      <Text fx:id="txtExcel" layoutX="481.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

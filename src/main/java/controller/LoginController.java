@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import model.Client;
 import service.AppManagerService;
+import utilites.CVCtoDatabase;
 
 
 import java.net.URL;
@@ -20,6 +21,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    @FXML
+    private Text txtExcel;
+    @FXML
+    private Button btnExportToExcel;
     @FXML
     private Button btnAllClients;
     @FXML
@@ -44,6 +49,12 @@ public class LoginController implements Initializable {
         btnLogin.setOnAction(event->login(event) );
         btnByStatus.setOnAction(event -> filterByStatus(event));
         btnAllClients.setOnAction(event -> filterAllClients(event));
+        btnExportToExcel.setOnAction(event -> exportToExcel());
+
+    }
+
+    private void exportToExcel() {
+     txtExcel.setText(new CVCtoDatabase().exportToExcel());
     }
 
     private void filterByStatus(Event event) {

@@ -58,8 +58,8 @@ public class CreateController implements Initializable {
         if (amount.isEmpty()){
             amount = "0";
         }
-        if(txtDate.getValue()==null||!amount.matches("[0-9]+")){
-            txtWrongAmount.setText("Fill amount correctly or choose date");
+        if(!amount.matches("[0-9]+")){
+            txtWrongAmount.setText("Fill amount correctly");
             return;
         }
 
