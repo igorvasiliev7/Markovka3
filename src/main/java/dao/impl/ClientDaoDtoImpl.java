@@ -157,7 +157,7 @@ public class ClientDaoDtoImpl {
         try {
             while (resultSet.next()) {
                 ClientDTO client = new ClientDTO(++number);
-//               client.setClientId(resultSet.getInt("id"));
+               client.setClientId(resultSet.getInt("id"));
                 client.setClientName(resultSet.getString("name"));
                 client.setClientPhone(resultSet.getString("phone"));
                 client.setClientStatus(resultSet.getString("status"));
@@ -177,7 +177,7 @@ public class ClientDaoDtoImpl {
         try {
             while (resultSet.next()) {
                 ClientDTO client = new ClientDTO(++number,"-","-");
-//                client.setClientId(resultSet.getInt("id"));
+                client.setClientId(resultSet.getInt("id"));
                 client.setClientName(resultSet.getString("name"));
                 client.setClientPhone(resultSet.getString("phone"));
                 client.setClientStatus(resultSet.getString("status"));

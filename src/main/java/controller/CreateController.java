@@ -72,7 +72,7 @@ public class CreateController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ClientController.setClient(client);
+        ClientController.client = client;
         nextStage(file, title);
     }
 

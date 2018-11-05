@@ -79,7 +79,7 @@ public class LoginController implements Initializable {
                 CreateController.setPhone(phone);
                 nextStage( event, "create", "Add new client");
             }else {
-                ClientController.setClient(client);
+                ClientController.client = client;
                 nextStage(event, "client", "Client`s info");
             }
         } catch (SQLException e) {

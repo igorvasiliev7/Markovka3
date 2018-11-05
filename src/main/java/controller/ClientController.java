@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
-    private static Client client;
+    public static Client client;
     @FXML
     private Button btnAddCard;
     @FXML
@@ -159,9 +159,9 @@ public class ClientController implements Initializable {
 
     }
 
-    public static void setClient(Client client) {
-        ClientController.client = client;
-    }
+//    public static void setClient(Client client) {
+//        ClientController.client = client;
+//    }
 
     public void pressedEnterCall(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {

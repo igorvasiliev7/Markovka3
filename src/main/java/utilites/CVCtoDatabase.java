@@ -172,7 +172,7 @@ public class CVCtoDatabase {
     //Base first parsing from csv
     private static void search() {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/base.csv"))) {
-            CSVReader reader = new CSVReader(br, ';');
+            CSVReader reader = new CSVReader(br);
             String[] list;
             Client client;
             reader.readNext();
